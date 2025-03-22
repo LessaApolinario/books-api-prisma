@@ -4,4 +4,5 @@ export default {
   authorCreatedWithSuccessMessage: 'Autor criado com sucesso',
   // General
   internalServerErrorMessage: 'Erro interno do servidor',
+  invalidPayloadMessage: 'Payload inválido',
 }

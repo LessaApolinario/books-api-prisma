@@ -14,7 +14,9 @@ class AuthorController {
       })
       const { data, success } = createAuthorSchema.safeParse(request.body)
       if (!success) {
-        return reply.status(400).send({ message: 'Payload inválido' })
+        return reply
+          .status(400)
+          .send({ message: messages.invalidPayloadMessage })
       }
 
       const { name } = data
