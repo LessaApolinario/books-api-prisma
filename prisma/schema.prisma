@@ -14,11 +14,11 @@ datasource db {
 }
 
 model Author {
-  id         String   @id @default(uuid()) @db.Uuid
+  id         String    @id @default(uuid()) @db.Uuid
   name       String
   books      Book[]
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now()) @updatedAt
 }
 
 model Book {
@@ -29,22 +29,22 @@ model Book {
   authors      Author[]
   genres       Genre[]
   subjects     Subject[]
-  created_at   DateTime  @default(now())
-  updated_at   DateTime  @default(now())
+  created_at   DateTime? @default(now())
+  updated_at   DateTime? @default(now()) @updatedAt
 }
 
 model Genre {
-  id         String   @id @default(uuid()) @db.Uuid
-  name       String   @unique
+  id         String    @id @default(uuid()) @db.Uuid
+  name       String    @unique
   books      Book[]
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now()) @updatedAt
 }
 
 model Subject {
-  id         String   @id @default(uuid()) @db.Uuid
-  name       String   @unique
+  id         String    @id @default(uuid()) @db.Uuid
+  name       String    @unique
   books      Book[]
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now()) @updatedAt
 }

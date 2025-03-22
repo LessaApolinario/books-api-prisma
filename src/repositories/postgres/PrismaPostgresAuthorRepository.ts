@@ -1,0 +1,66 @@
+import type { Author } from '@prisma/client'
+import prismaClient from '../../config/database'
+import AuthorRepository from '../../interfaces/repositories/AuthorRepository'
+import type { CreateAuthorRequest } from '../../types/CreateAuthorRequest'
+
+class PrismaPostgresAuthorRepository implements AuthorRepository {
+  async create(author: CreateAuthorRequest): Promise<boolean> {
+    const { id } = await prismaClient.author.create({
+      data: {
+        name: author.name,
+      },
+    })
+
+    return !!id.length
+  }
+
+  async update(author: Author): Promise<boolean> {
+    const { id } = await prismaClient.author.update({
+      data: {
+        name: author.name,
+        updated_at: new Date(),
+      },
+      where: {
+        id: author.id,
+      },
+    })
+
+    return !!id.length
+  }
+
+  async fetch(): Promise<Author[]> {
+    return await prismaClient.author.findMany()
+  }
+
+  async remove(id: string): Promise<boolean> {
+    const deleteResult = await prismaClient.author.delete({
+      where: {
+        id,
+      },
+    })
+
+    return !!deleteResult.id.length
+  }
+
+  async findByName(name: string): Promise<Author | null> {
+    return await prismaClient.author.findFirst({
+      where: {
+        name,
+      },
+    })
+  }
+
+  async fetchByBookID(bookID: string): Promise<Author[]> {
+    return await prismaClient.author.findMany({
+      where: {
+        books: {
+          some: {
+            id: bookID,
+          },
+        },
+      },
+    })
+  }
+}
+
+export default PrismaPostgresAuthorRepository
