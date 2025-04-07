@@ -126,6 +126,30 @@ class AuthorController {
         .send({ message: messages.internalServerErrorMessage })
     }
   }
+
+  async fetchAuthorByBookID(request: FastifyRequest, reply: FastifyReply) {
+    try {
+      const fetchAuthorByBookIdSchema = z.object({
+        book_id: z.string(),
+      })
+      const { data, success } = fetchAuthorByBookIdSchema.safeParse(
+        request.params
+      )
+      if (!success) {
+        return reply
+          .status(400)
+          .send({ message: messages.invalidPayloadMessage })
+      }
+
+      const authors = await this.useCase.fetchByBookID(data.book_id)
+      return reply.status(200).send(authors)
+    } catch (error) {
+      console.error(error)
+      return reply
+        .status(500)
+        .send({ message: messages.internalServerErrorMessage })
+    }
+  }
 }
 
 export default AuthorController
