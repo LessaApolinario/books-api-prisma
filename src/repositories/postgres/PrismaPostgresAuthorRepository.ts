@@ -1,7 +1,10 @@
 import type { Author } from '@prisma/client'
 import prismaClient from '../../config/database'
 import AuthorRepository from '../../interfaces/repositories/AuthorRepository'
-import type { CreateAuthorRequest } from '../../types/CreateAuthorRequest'
+import type {
+  CreateAuthorRequest,
+  UpdateAuthorRequest,
+} from '../../types/request/author'
 
 class PrismaPostgresAuthorRepository implements AuthorRepository {
   async create(author: CreateAuthorRequest): Promise<boolean> {
@@ -14,7 +17,7 @@ class PrismaPostgresAuthorRepository implements AuthorRepository {
     return !!id.length
   }
 
-  async update(author: Author): Promise<boolean> {
+  async update(author: UpdateAuthorRequest): Promise<boolean> {
     const { id } = await prismaClient.author.update({
       data: {
         name: author.name,
@@ -40,6 +43,14 @@ class PrismaPostgresAuthorRepository implements AuthorRepository {
     })
 
     return !!deleteResult.id.length
+  }
+
+  async findById(id: string): Promise<Author | null> {
+    return await prismaClient.author.findFirst({
+      where: {
+        id,
+      },
+    })
   }
 
   async findByName(name: string): Promise<Author | null> {

@@ -7,4 +7,5 @@ export async function authorRoutes(app: FastifyInstance) {
   const controller = new AuthorController(useCase)
 
   app.post('/author/create', controller.createAuthor.bind(controller))
+  app.put('/author/update', controller.updateAuthor.bind(controller))
 }

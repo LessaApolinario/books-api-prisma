@@ -1,7 +1,10 @@
 import type { Author } from '@prisma/client'
 import type AuthorRepository from '../interfaces/repositories/AuthorRepository'
 import AuthorUseCase from '../interfaces/usecases/AuthorUseCase'
-import type { CreateAuthorRequest } from '../types/CreateAuthorRequest'
+import type {
+  CreateAuthorRequest,
+  UpdateAuthorRequest,
+} from '../types/request/author'
 
 class AuthorService implements AuthorUseCase {
   constructor(private readonly repository: AuthorRepository) {}
@@ -10,7 +13,7 @@ class AuthorService implements AuthorUseCase {
     return this.repository.create(author)
   }
 
-  update(author: Author): Promise<boolean> {
+  update(author: UpdateAuthorRequest): Promise<boolean> {
     return this.repository.update(author)
   }
 
@@ -20,6 +23,10 @@ class AuthorService implements AuthorUseCase {
 
   remove(id: string): Promise<boolean> {
     return this.repository.remove(id)
+  }
+
+  findById(id: string): Promise<Author | null> {
+    return this.repository.findById(id)
   }
 
   findByName(name: string): Promise<Author | null> {
