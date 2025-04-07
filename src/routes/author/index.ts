@@ -8,4 +8,6 @@ export async function authorRoutes(app: FastifyInstance) {
 
   app.post('/author/create', controller.createAuthor.bind(controller))
   app.put('/author/update', controller.updateAuthor.bind(controller))
+  app.get('/authors', controller.fetchAuthors.bind(controller))
+  app.delete('/author/remove/:id', controller.removeAuthor.bind(controller))
 }
