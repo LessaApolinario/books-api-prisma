@@ -28,4 +28,16 @@ describe('Update author tests', () => {
     const result = await sut.update(updatedAuthor)
     expect(result).toBeTruthy()
   })
+
+  it('should not be able to update an author', async () => {
+    const AUTHOR_NOT_FOUND_ID = 'some-id-that-does-not-exist'
+
+    const updateAuthor = {
+      id: AUTHOR_NOT_FOUND_ID,
+      name: 'New name',
+    }
+
+    const result = await sut.update(updateAuthor)
+    expect(result).toBeFalsy()
+  })
 })

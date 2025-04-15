@@ -38,11 +38,12 @@ class InMemoryAuthorRepository implements AuthorRepository {
       return item.id === author.id
     })
 
-    console.log('before: ', this.authors)
-    const cloneAuthors = this.authors
-    cloneAuthors[foundAuthorIndex] = foundAuthor
-    this.authors = cloneAuthors
-    console.log('after: ', this.authors)
+    this.authors[foundAuthorIndex] = {
+      id: author.id,
+      name: author.name,
+      created_at: foundAuthor.created_at,
+      updated_at: new Date(),
+    }
 
     return true
   }
