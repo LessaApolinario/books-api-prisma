@@ -7,14 +7,12 @@ import type {
 } from '../../types/request/author'
 
 class PrismaPostgresAuthorRepository implements AuthorRepository {
-  async create(author: CreateAuthorRequest): Promise<boolean> {
-    const { id } = await prismaClient.author.create({
+  async create(author: CreateAuthorRequest): Promise<Author | null> {
+    return await prismaClient.author.create({
       data: {
         name: author.name,
       },
     })
-
-    return !!id.length
   }
 
   async update(author: UpdateAuthorRequest): Promise<boolean> {

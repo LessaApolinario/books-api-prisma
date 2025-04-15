@@ -5,7 +5,7 @@ import type {
 } from '../../types/request/author'
 
 interface AuthorUseCase {
-  create(author: CreateAuthorRequest): Promise<boolean>
+  create(author: CreateAuthorRequest): Promise<Author | null>
   update(author: UpdateAuthorRequest): Promise<boolean>
   fetch(): Promise<Author[]>
   remove(id: string): Promise<boolean>

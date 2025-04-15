@@ -9,7 +9,7 @@ import type {
 class AuthorService implements AuthorUseCase {
   constructor(private readonly repository: AuthorRepository) {}
 
-  create(author: CreateAuthorRequest): Promise<boolean> {
+  create(author: CreateAuthorRequest): Promise<Author | null> {
     return this.repository.create(author)
   }
 
